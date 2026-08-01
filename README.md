@@ -3,7 +3,11 @@
 An interactive, high-performance web application designed to evaluate used car market prices based on the CarDekho dataset. Powered by an ensemble of machine learning models (**Random Forest Regressor**, **Decision Tree**, and **Linear Regression**) with both **Client-Side JavaScript Inference** and **Python Flask Backend REST API** support.
 
 ---
+## 👤 Participant Details
 
+- **Participant Name**: `Gifton Shibu`
+- **MUID**: `giftonshibu@mulearn`
+---
 ## 🌟 Key Features
 
 1. **Interactive Valuation Interface**:
@@ -55,64 +59,3 @@ Epoch/
 
 ---
 
-## 🚀 Local Setup & Running Instructions
-
-### Option 1: Running with Python Flask Backend (Recommended)
-
-1. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. **Train the ML model and generate artifacts**:
-   ```bash
-   python train_and_export.py
-   ```
-3. **Start the Flask web server**:
-   ```bash
-   python app.py
-   ```
-4. Open your browser and navigate to: `http://localhost:5000`
-
-### Option 2: Running as a Pure Static Application (No Python Required)
-
-Because `ml_engine.js` runs directly in the browser, you can serve the directory using any static web server:
-```bash
-npx serve .
-# or
-python -m http.server 8000
-```
-
----
-
-## 🌐 Public Deployment Guide
-
-### Deploying to Vercel (Static / Serverless)
-
-1. Install Vercel CLI or connect your GitHub repository to Vercel.
-2. Run `vercel` in the project root folder.
-3. Select default settings (Framework: Other, Build Command: None, Output Directory: `./`).
-4. Access your live public URL!
-
-### Deploying to Render / Railway (Flask API Server)
-
-1. Create a new Web Service on [Render](https://render.com).
-2. Connect your GitHub repository.
-3. Set **Environment**: `Python 3`.
-4. Set **Build Command**: `pip install -r requirements.txt && python train_and_export.py`
-5. Set **Start Command**: `gunicorn app:app`
-
----
-
-## 📝 Reflection on Deployment Experience & Challenges
-
-### 1. Deployment Experience
-Deploying machine learning applications often introduces server resource overhead due to large dependencies (`scikit-learn`, `numpy`, `torch`). By implementing a dual-engine architecture (exporting tree decision logic to JSON for client-side JS execution), the application can be hosted completely free on static edge networks like Vercel or GitHub Pages while maintaining zero-latency predictions.
-
-### 2. Challenges & Engineering Solutions
-- **Model Size Optimization**: Full Random Forests with hundreds of deep decision trees produce massive file sizes. We exported top decision trees and pruned leaf depth, reducing artifact size to under 2MB while preserving over 99.4% model accuracy.
-- **Categorical Feature Alignment**: Handling 120+ unique car models required robust dictionary mapping between user interface selections and model label encoding indexes.
-
-### 3. Future Improvements
-- **XGBoost & Gradient Boosting**: Integrate XGBoost or CatBoost for improved error metric reduction.
-- **Computer Vision Damage Assessment**: Allow users to upload car images to detect scratches or exterior wear using CNN models.
-- **Real-Time Market Scraping**: Update model pricing dynamically via live web scrapers.
