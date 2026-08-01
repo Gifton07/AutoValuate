@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoValuate — Instant Fair Used Car Market Valuation</title>
+  <meta name="description" content="Calculate fair used car market prices instantly. Protect car buyers and empower sellers with transparent, AI-assisted price estimates and resale insights.">
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Ambient Glow -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="brand">
+        <i class="fa-solid fa-car-side logo-icon"></i>
+        <div class="brand-text">
+          <span class="brand-title">AutoValuate<span class="highlight">.in</span></span>
+          <span class="brand-sub">Fair Market Car Estimator</span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#calculator" class="nav-link active"><i class="fa-solid fa-calculator"></i> Price Calculator</a>
+        <a href="#presets" class="nav-link"><i class="fa-solid fa-fire"></i> Popular Cars</a>
+        <a href="#society-guide" class="nav-link"><i class="fa-solid fa-hand-holding-heart"></i> Buyer & Seller Guide</a>
+        <a href="#reflection" class="nav-link"><i class="fa-solid fa-circle-info"></i> Project Report</a>
+      </nav>
+      <div class="status-badge">
+        <span class="pulse-dot"></span>
+        <span>Instant Live Estimates</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Hero Banner -->
+    <section class="hero-section container">
+      <div class="hero-content">
+        <div class="hero-badge"><i class="fa-solid fa-shield-heart"></i> Transparent Pricing for Society</div>
+        <h1 class="hero-title">Know the <span class="gradient-text">True Market Value</span> of Any Car</h1>
+        <p class="hero-description">
+          Whether you are buying your first car or selling your current vehicle, get an instant, unbiased price estimate based on real market transaction data. Never overpay or get underquoted again.
+        </p>
+      </div>
+    </section>
+
+    <!-- Quick Presets Carousel -->
+    <section id="presets" class="presets-section container">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-car"></i> Popular Cars — Quick Valuations</h2>
+        <p>Click any car to instantly auto-fill specifications and view fair market pricing</p>
+      </div>
+      <div class="presets-grid" id="presets-container">
+        <!-- JS inserts preset cards -->
+      </div>
+    </section>
+
+    <!-- Main Interactive Calculator & Result Interface -->
+    <section id="calculator" class="calculator-section container">
+      <div class="calculator-grid">
+        
+        <!-- Car Input Form -->
+        <div class="card form-card">
+          <div class="card-header">
+            <h3><i class="fa-solid fa-list-check"></i> Enter Car Details</h3>
+            <span class="step-indicator">Step 1: Vehicle Profile</span>
+          </div>
+
+          <form id="valuation-form">
+            <!-- Brand & Model Row -->
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="brand-select"><i class="fa-solid fa-building font-icon"></i> Car Manufacturer</label>
+                <select id="brand-select" class="form-control" required>
+                  <option value="" disabled selected>Select Brand</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="model-select"><i class="fa-solid fa-car font-icon"></i> Vehicle Model</label>
+                <select id="model-select" class="form-control" required>
+                  <option value="" disabled selected>Select Model</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Vehicle Age Slider & Quick Buttons -->
+            <div class="form-group">
+              <div class="slider-header">
+                <label for="age-slider"><i class="fa-solid fa-calendar-days font-icon"></i> Vehicle Age</label>
+                <span class="slider-value" id="age-val">4 Years Old</span>
+              </div>
+              <input type="range" id="age-slider" min="1" max="20" value="4" class="custom-slider">
+              <div class="quick-chips">
+                <button type="button" class="quick-chip" onclick="setAge(2)">2 Yrs (Nearly New)</button>
+                <button type="button" class="quick-chip" onclick="setAge(5)">5 Yrs (Moderate)</button>
+                <button type="button" class="quick-chip" onclick="setAge(8)">8 Yrs (Older)</button>
+              </div>
+            </div>
+
+            <!-- KM Driven Slider & Quick Buttons -->
+            <div class="form-group">
+              <div class="slider-header">
+                <label for="km-slider"><i class="fa-solid fa-gauge-high font-icon"></i> Total Odometer Reading</label>
+                <span class="slider-value" id="km-val">40,000 km</span>
+              </div>
+              <input type="range" id="km-slider" min="1000" max="300000" step="1000" value="40000" class="custom-slider">
+              <div class="quick-chips">
+                <button type="button" class="quick-chip" onclick="setKm(20000)">20k km (Low Use)</button>
+                <button type="button" class="quick-chip" onclick="setKm(50000)">50k km (Average)</button>
+                <button type="button" class="quick-chip" onclick="setKm(90000)">90k km (High Use)</button>
+              </div>
+            </div>
+
+            <!-- Fuel Type, Transmission, Seller Type -->
+            <div class="form-row three-col">
+              <div class="form-group">
+                <label for="fuel-select"><i class="fa-solid fa-gas-pump font-icon"></i> Fuel Type</label>
+                <select id="fuel-select" class="form-control" required></select>
+              </div>
+              <div class="form-group">
+                <label for="transmission-select"><i class="fa-solid fa-gears font-icon"></i> Transmission</label>
+                <select id="transmission-select" class="form-control" required></select>
+              </div>
+              <div class="form-group">
+                <label for="seller-select"><i class="fa-solid fa-user-tag font-icon"></i> Seller Category</label>
+                <select id="seller-select" class="form-control" required></select>
+              </div>
+            </div>
+
+            <!-- Specs: Engine, Power, Mileage & Seats -->
+            <div class="form-row four-col">
+              <div class="form-group">
+                <label for="engine-input"><i class="fa-solid fa-microchip font-icon"></i> Engine (CC)</label>
+                <input type="number" id="engine-input" class="form-control" min="600" max="6500" value="1197" required>
+              </div>
+              <div class="form-group">
+                <label for="power-input"><i class="fa-solid fa-bolt font-icon"></i> Max Power (BHP)</label>
+                <input type="number" id="power-input" class="form-control" step="0.1" min="30" max="700" value="81.8" required>
+              </div>
+              <div class="form-group">
+                <label for="mileage-input"><i class="fa-solid fa-leaf font-icon"></i> Fuel Economy (kmpl)</label>
+                <input type="number" id="mileage-input" class="form-control" step="0.1" min="5" max="45" value="21.2" required>
+              </div>
+              <div class="form-group">
+                <label for="seats-input"><i class="fa-solid fa-chair font-icon"></i> Seating Capacity</label>
+                <input type="number" id="seats-input" class="form-control" min="2" max="10" value="5" required>
+              </div>
+            </div>
+
+            <!-- Calculated Summary Badge -->
+            <div class="summary-badge-box">
+              <div class="summary-item"><i class="fa-solid fa-road"></i> Annual Usage: <strong id="chip-km-yr">8,000 km/yr</strong></div>
+              <div class="summary-item"><i class="fa-solid fa-gauge"></i> Efficiency Tier: <strong id="chip-power-cc">Standard</strong></div>
+              <div class="summary-item"><i class="fa-solid fa-gem"></i> Brand Tier: <strong id="chip-premium">Standard</strong></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Calculate Fair Market Value
+            </button>
+          </form>
+        </div>
+
+        <!-- Valuation Results Panel -->
+        <div class="card result-card">
+          <div class="card-header">
+            <h3><i class="fa-solid fa-chart-pie"></i> Estimated Market Valuation</h3>
+            <span class="badge badge-success"><i class="fa-solid fa-check-circle"></i> Verified Market Estimate</span>
+          </div>
+
+          <!-- Price Display -->
+          <div class="price-hero">
+            <span class="price-subtitle">Fair Estimated Value</span>
+            <div class="price-main">
+              <span class="currency">₹</span>
+              <span class="amount-lakh" id="res-price-lakh">5.45</span>
+              <span class="unit">Lakhs</span>
+            </div>
+            <div class="price-full" id="res-price-full">₹ 5,45,000</div>
+          </div>
+
+          <!-- Price Range Bar -->
+          <div class="range-box">
+            <div class="range-header">
+              <span>Fair Market Price Window (Min - Max):</span>
+            </div>
+            <div class="range-values">
+              <span class="range-min" id="res-range-min">₹ 4.77 Lakhs</span>
+              <div class="range-bar-container">
+                <div class="range-bar"></div>
+              </div>
+              <span class="range-max" id="res-range-max">₹ 6.12 Lakhs</span>
+            </div>
+          </div>
+
+          <!-- Advice Cards for Buyers & Sellers -->
+          <div class="advice-grid">
+            <div class="advice-card buyer">
+              <div class="advice-title"><i class="fa-solid fa-bag-shopping"></i> Buying Advice</div>
+              <p class="advice-text" id="advice-buyer">
+                Target price: <strong>₹ 5.10 L - ₹ 5.45 L</strong>. Do not pay over ₹ 5.80 L unless under warranty or with extra accessories.
+              </p>
+            </div>
+            <div class="advice-card seller">
+              <div class="advice-title"><i class="fa-solid fa-tag"></i> Selling Advice</div>
+              <p class="advice-text" id="advice-seller">
+                List at <strong>₹ 5.65 L</strong> to leave negotiation margin and close the deal around ₹ 5.40 L - ₹ 5.50 L.
+              </p>
+            </div>
+          </div>
+
+          <!-- Key Value Factors -->
+          <div class="factors-group">
+            <h4><i class="fa-solid fa-list-ul"></i> Factors Influencing This Price</h4>
+            <div class="factors-list" id="factors-list">
+              <!-- JS inserts factors -->
+            </div>
+          </div>
+
+          <!-- Future Value Estimate -->
+          <div class="future-depreciation-box">
+            <h4><i class="fa-solid fa-clock-rotate-left"></i> Projected Future Resale Value</h4>
+            <div class="future-grid">
+              <div class="future-item">
+                <span class="future-label">In 1 Year</span>
+                <span class="future-val" id="future-1yr">₹ 4.80 Lakhs</span>
+              </div>
+              <div class="future-item">
+                <span class="future-label">In 2 Years</span>
+                <span class="future-val" id="future-2yr">₹ 4.25 Lakhs</span>
+              </div>
+              <div class="future-item">
+                <span class="future-label">In 3 Years</span>
+                <span class="future-val" id="future-3yr">₹ 3.75 Lakhs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Society Help: Car Buyer & Seller Guide -->
+    <section id="society-guide" class="guide-section container">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-hand-holding-heart"></i> Protecting Car Buyers & Empowering Sellers</h2>
+        <p>Smart, actionable advice to help everyday citizens make safe financial decisions</p>
+      </div>
+
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+          <h3>5 Essential Checks Before Buying</h3>
+          <ul class="guide-list">
+            <li><i class="fa-solid fa-circle-check"></i> <strong>RC & Insurance Verification:</strong> Verify owner name on Vahan portal and check active NCB bonus.</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Accident & Flood History:</strong> Inspect engine bay bolts for tampering and under-seat foam for water stains.</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Service Record History:</strong> Always ask for authorized dealership service logs to confirm odometer mileage.</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Comprehensive Test Drive:</strong> Test clutch feedback, suspension noises over speedbumps, and AC cooling performance.</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Transfer Formalities:</strong> Ensure Form 29 & 30 are signed to safely complete ownership transfer.</li>
+          </ul>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-icon"><i class="fa-solid fa-coins"></i></div>
+          <h3>How Sellers Can Get Maximum Value</h3>
+          <ul class="guide-list">
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Professional Detailing:</strong> A clean car exterior and deep-cleaned interior can increase offer price by 5-10%.</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Fix Minor Scratches:</strong> Minor paint touch-ups prevent buyers from demanding aggressive price discounts.</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Gather Maintenance Bills:</strong> Documented oil changes and battery replacements build strong buyer trust.</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>High-Quality Photos:</strong> Take clear daylight photos of exterior, dashboard, seats, and tires.</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Know Your Bottom Line:</strong> Use AutoValuate fair range so you don't accept lowball dealership quotes.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reflection & Project Report -->
+    <section id="reflection" class="reflection-section container">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-file-lines"></i> Project Reflection & Technical Overview</h2>
+        <p>Deployment experience, integration details, and societal impact statement</p>
+      </div>
+
+      <div class="reflection-grid">
+        <div class="card reflection-card">
+          <div class="reflection-header">
+            <i class="fa-solid fa-heart-pulse icon-box"></i>
+            <div>
+              <h3>Societal Impact & Mission</h3>
+              <span class="reflection-sub">Empowering Everyday Consumers</span>
+            </div>
+          </div>
+          <div class="reflection-body">
+            <p>
+              Buying or selling a car is one of the largest financial transactions for middle-class families. Used car markets often suffer from <strong>information asymmetry</strong>, where dealers exploit uninformed buyers or underquote sellers.
+            </p>
+            <p>
+              This interactive platform bridges that gap by delivering objective, data-backed car valuations free of charge, protecting citizens from unfair deals.
+            </p>
+          </div>
+        </div>
+
+        <div class="card reflection-card">
+          <div class="reflection-header">
+            <i class="fa-solid fa-cloud-sun icon-box success"></i>
+            <div>
+              <h3>Deployment & Web Integration</h3>
+              <span class="reflection-sub">Architecture & Public Hosting</span>
+            </div>
+          </div>
+          <div class="reflection-body">
+            <p>
+              The system features a <strong>Dual-Engine Architecture</strong>:
+            </p>
+            <ul>
+              <li><strong>Zero-Latency Static Client Engine:</strong> Evaluates decision rules in JavaScript (<code>ml_engine.js</code>) directly in the browser, making the site deployable on Vercel, Netlify, or GitHub Pages.</li>
+              <li><strong>Flask Python REST API:</strong> <code>app.py</code> provides backend model evaluation for hosting on Render / Railway.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card reflection-card full-width">
+          <div class="reflection-header">
+            <i class="fa-solid fa-lightbulb icon-box warning"></i>
+            <div>
+              <h3>Challenges Overcome & Future Improvements</h3>
+              <span class="reflection-sub">Engineering Learnings & Roadmap</span>
+            </div>
+          </div>
+          <div class="reflection-body grid-2">
+            <div class="roadmap-item">
+              <h4><i class="fa-solid fa-sliders"></i> User Experience vs ML Complexity</h4>
+              <p>Removed technical machine learning metrics (R² charts, tree nodes) from the primary consumer flow to maintain a clean, friendly product focused on fair market prices and actionable consumer advice.</p>
+            </div>
+            <div class="roadmap-item">
+              <h4><i class="fa-solid fa-map-location-dot"></i> Regional & City Tax Variations</h4>
+              <p>Future versions will incorporate state RTO taxes (e.g. Karnataka vs Delhi vs Maharashtra) to adjust price estimates based on location demand.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-left">
+        <p><strong>AutoValuate.in</strong> — Transparent Car Pricing for Everyone</p>
+        <p class="copyright">Helping buyers and sellers make informed automotive financial decisions.</p>
+      </div>
+      <div class="footer-right">
+        <span class="footer-badge"><i class="fa-solid fa-shield-check"></i> Fair Market Valuation Engine</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="ml_engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
